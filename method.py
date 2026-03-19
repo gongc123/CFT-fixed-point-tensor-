@@ -745,7 +745,7 @@ class descendants:
                 if key[1] in self.redstate:
                     update=1
      
-    def othbasis(self,level,dim):
+    def othbasis(self,level,dim,_print=0):
         levelbasis=[ele for ele in self.basis if strsum(ele)==level]
         n=len(levelbasis)
         m=numpy.zeros((n,n))
@@ -755,10 +755,12 @@ class descendants:
                 op2=operator(dim,str2,0)  
                 op1.trans(Lambda(x,1/(x+1)))
                 op2.trans(Lambda(x,x/(x+1)))
-                print('computing',str1,str2)
+                if _print==1:
+                    print('computing',str1,str2)
                 t=tensor(op1,op2)
                 m[i1][i2]=t.value()
-        print(m)
+        if _print==1:
+            print(m)
         self.innermatrix=m
         es,vs=linalg.eig(m)
         vs=vs.transpose()
